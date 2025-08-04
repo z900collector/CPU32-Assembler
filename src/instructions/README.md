@@ -1,8 +1,10 @@
 # Overview
 
-The instructions directory contains classes that represent assembly langauge Instructions and the code needed to parse a line of assembly from the given ASM file.
+The "instructions" directory contains classes that represent assembly langauge Instructions and the code needed to parse a line of assembly from the given ASM file.
 
 Rather than create a parser that must understand every instruction format, putting that logic into the Instruction Object seams like a novel way to process each line.
+
+If an instruction has multiple formats, they could in placed into one file or you can create a file for each variation (that does tend to bloat the code).
 
 ## Expanding the Instruction Set
 
