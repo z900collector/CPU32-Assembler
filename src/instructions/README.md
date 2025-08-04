@@ -17,6 +17,6 @@ Adding a NEW instruction is as simple as:
 * And add a line in the load() method in "InstLoader.h" to push an instance of the Instruction into the list of available instructions.
 
 ## Debugging New Instructions
-When developing new instrcutions, you can use the built in Logger class to write the internal operations of the new Instruction to the log file.
+When developing new instructions, you can use the built in Logger class to write the internal operations of the new Instruction to the log file.
 By tailing the log file, you can build a test asm file with the instruction in all it's variations and ensure the processing of the instruction is correct.
 
