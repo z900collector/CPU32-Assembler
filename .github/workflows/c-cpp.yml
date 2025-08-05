@@ -1,5 +1,5 @@
 # .github/workflows/build-cpp.yml
-name: C++ Build
+name: C++ Source Code Build
 on:
   push:
     branches: [ main ]
