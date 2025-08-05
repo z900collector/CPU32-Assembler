@@ -2,7 +2,7 @@
 #
 #
 #
-BASE_DIR=/home/syoung/ASM
+BASE_DIR=/opt/tols/ASM24
 SRC_DIR=${BASE_DIR}/src
 INST_DIR=${BASE_DIR}/src/instructions
 
