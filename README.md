@@ -1,10 +1,12 @@
-# ASM24 Assembler
+# CPU32 Assembler
 
 DRAFT - Assembler is in Development.
 
 [![C++ Build](https://github.com/z900collector/CPU32-Assembler/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/z900collector/CPU32-Assembler/actions/workflows/c-cpp.yml)
 
-ASM24 is an assembler written in basic C++ custom HomeBrew CPU design. 
+This assembler is written in basic C++ for a custom HomeBrew CPU design that has evolved from an 8bit design idea into something much larger. 
+
+It is referred to as ASM24 in much of the code as the target environment is going to be 24bits.
 
 What makes ASM24 different is the logic for each instruction is handled by the "Instruction Object" itself. This allows the mnemonics and opcodes to be changed to suit any architecture.
 
