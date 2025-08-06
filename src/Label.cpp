@@ -18,11 +18,14 @@
  */
 
 #include <string>
+#include <iostream>
 #include "Label.h"
 
+using namespace std;
 
 Label::Label()
 {
+        this->_label_referenced = 1;
         this->_label_location = 0;
         this->_label_valid = false;
         this->_label_name="undefined";
@@ -70,6 +73,17 @@ void Label::setName(std::string n)
  * Label memory location accessor/mutator
  *
  */
+void Label::incRefCount()
+{
+	this->_label_referenced++;
+}
+
+unsigned Label::getRefCount() const
+{
+		  return this->_label_referenced;
+}
+
+
 unsigned Label::getLocation() const
 {
         return this->_label_location;
@@ -80,5 +94,11 @@ void Label::setLocation(unsigned loc)
 {
         this->_label_location = loc;
         this->_label_valid = true;
+}
+
+
+void Label::dump()
+{
+		  cout<<this->_label_location<<" - "<<this->_label_name<<" - "<<this->_label_valid<<endl;
 }
 /* End of file */

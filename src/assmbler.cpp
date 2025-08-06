@@ -94,12 +94,11 @@ fstream _srcFile;
         if(_srcFile.is_open())
         {
                 pLog->LogMsg( "File opened." );
+					 cout<<"Open file [ "<<pGP->getInputFile()<<" ]"<<endl;
                 Parser *pParser = new Parser();
                 const auto pIList = pParser->parse(&_srcFile, pGP);
                 pLog->LogMsg( "Close File." );
                 _srcFile.close();
-
-//              DumpList(pIList);
                 delete pParser;
         }
         else

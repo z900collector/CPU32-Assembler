@@ -21,6 +21,7 @@
 class Label
 {
 private:
+unsigned int _label_referenced;
 unsigned int _label_location;
 std::string  _label_name = "";
 bool         _label_valid = false;
@@ -35,6 +36,9 @@ std::string getName();
 void setName(std::string n);
 unsigned getLocation() const;
 void setLocation(unsigned loc);
+void dump();
+void incRefCount();
+unsigned getRefCount() const;
 };
 
 #endif

@@ -26,7 +26,7 @@ void Instruction::setLocation(unsigned int loc) {this->_mem_loc = loc;this->_mem
 std::string Instruction::toHex()
 {
 std::stringstream ss;
-        ss << std::setw(8) << std::setfill('0') <<std::hex << this->getWord();
+        ss << std::setw(4) << std::setfill('0') <<std::hex << this->getWord();
         return ss.str();
 }
 
