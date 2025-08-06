@@ -19,6 +19,9 @@
 #include "INCDECInst.h"
 #include "XORInst.h"
 #include "NOPInst.h"
+#include "PUSHInst.h"
+//NEXT_ENTRY
+//
 
 using namespace std;
 
@@ -45,6 +48,8 @@ vector<Instruction *> * load()
         this->pISet->push_back(new INCDECInst);
         this->pISet->push_back(new NOPInst);
         this->pISet->push_back(new XORInst);
+        this->pISet->push_back(new PUSHInst);
+//NEXT_PUSH_BACK
         return this->pISet;
 }
 };

@@ -24,16 +24,28 @@
  * This type of Utility has Source and Destination Registers
  * encoded in the same instruction at different spots.
  *
+ * 16 Bit Format
+ * TTiiiiii SSSDDD00
+ * TTiiiiii SSSDDD00 76543210
+ * TTiiiiii SSSDDD00 -------- 76543210
+ *
+ * BITS  Reg  Mask
+ * 16     D     2
+ * 16     S     5
+ * 24     D    10
+ * 24     S    13
+ * 32     D    18
+ * 32     S    21;
  */
 unsigned int Utility::getRegisterMask(char reg, unsigned int mask)
 {
         switch(reg)
         {
                 case 'D':
-                        mask = mask << 16;
+                        mask = mask << 2;
                         break;
                 case 'S':
-                        mask = mask << 20;
+                        mask = mask << 5;
                         break;
         }
         return mask;

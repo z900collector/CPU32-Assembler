@@ -22,20 +22,23 @@
 
 HALTInst::HALTInst()
 {
-        this->pLog = Logger::getInstance();
+	this->pLog = Logger::getInstance();
+	this->pLabel = nullptr;
 }
 
 Instruction * HALTInst::parse(std::vector<std::string> words)
 {
-        if(words[0]=="HALT")
-        {
-                Instruction *pInst = new HALTInst();
-                pInst->setWord(HALT);
-                pInst->setName("HALT");
-                pInst->setLength(1);
-                return pInst;
-        }
-        else
-                return nullptr;
+	this->pLog->LogFunction("parse()");
+	if(words[0]=="HALT")
+	{
+		this->pLog->LogFunction("parse()");
+		Instruction *pInst = new HALTInst();
+		pInst->setWord(HALT);
+		pInst->setName("HALT");
+		pInst->setLength(1);
+		return pInst;
+	}
+	else
+		return nullptr;
 }
 /* End of file */

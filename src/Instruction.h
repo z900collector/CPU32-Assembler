@@ -6,7 +6,7 @@
 
 #include <string>
 #include <vector>
-//#include "Label.h"
+#include "Label.h"
 
 
 
@@ -18,6 +18,7 @@ unsigned int  instruction_word=0;
 unsigned int  instruction_length=1;
 unsigned int  _mem_loc;
 bool          _mem_loc_flag;
+Label	 *pLabel;
 
 public:
 std::string getName();
