@@ -16,7 +16,7 @@ R0-R3 are specialized registers with extended ALU capability (INC/DEC/SHL/ROL et
 ```
 STATUS: Very Incomplete!
 
-##Instruction mnemonic bit encoding
+## Instruction mnemonic bit encoding
 
 Below is the 8 bit value representing the ISA:
 
@@ -27,13 +27,14 @@ Below is the 8 bit value representing the ISA:
 10-- ---- Type 2 Instruction - Register operations 80-bf
 11-- ---- Type 3 Instruction - Jumps/Calls (+halt) c0-ff
 ```
-Bits 5-0 are available
+Bits 5-0 are available for use.
+
 ## Type 0 Instructions
 
 The type 0 instructions have a range of 00-4f
 ```
 	NOP   = 0x00
-	BSET  = 0x01
+	BSET  = 0x01 - Register Only at this stage
 	BCLR  = 0x02
 	BTST  = 0x03
 
