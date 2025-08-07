@@ -26,6 +26,7 @@
 #include "BCLRInst.h"
 #include "BTSTInst.h"
 #include "CALLInst.h"
+#include "RETInst.h"
 //NEXT_ENTRY
 
 using namespace std;
@@ -45,7 +46,7 @@ public:
 InstLoader()
 {
 	this->pLog = Logger::getInstance();
-	this->pLog->LogMsg("InstLoader() Coonstructor");
+	this->pLog->LogMsg("InstLoader() Constructor");
 }
 
 /**
@@ -57,19 +58,21 @@ InstLoader()
 vector<Instruction *> * load()
 {
 	this->pLog->LogFunction("InstLoader::load()");
+
+//NEXT_PUSH_BACK
+	this->pISet->push_back(new RETInst);
 	this->pISet->push_back(new CALLInst);
 	this->pISet->push_back(new HALTInst);
+	this->pISet->push_back(new NOPInst);
 	this->pISet->push_back(new LDInst);
 	this->pISet->push_back(new INCDECInst);
-	this->pISet->push_back(new NOPInst);
 	this->pISet->push_back(new XORInst);
 	this->pISet->push_back(new PUSHInst);
 	this->pISet->push_back(new POPInst);
 	this->pISet->push_back(new BSETInst);
 	this->pISet->push_back(new BCLRInst);
 	this->pISet->push_back(new BTSTInst);
-//NEXT_PUSH_BACK
-	this->pLog->LogFunction("Supported Instructions loaded!");
+	this->pLog->LogMsg("Load Complete - return ISet object");
 	return this->pISet;
 }
 };
