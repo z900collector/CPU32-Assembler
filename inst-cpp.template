@@ -61,7 +61,7 @@ unsigned int reg = 0;
 std::stringstream params(words[1]);
 std::vector<std::string> parts;
 
-	this->pLog->LogFunction(""Process_${INST}_Instruction()";
+	this->pLog->LogFunction("Process_${INST}_Instruction()");
 	while(params.good())
 	{
 		std::string substr;
