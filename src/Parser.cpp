@@ -152,7 +152,7 @@ string LINE;
 	this->pPC = new ProgramCounter();
 	pPC->setPC(0);
 
-	this->pLog->LogMsg("Read File.");
+	this->pLog->LogMsg("Start Reading SOURCE File....");
 	while(getline(*pSourceFile, LINE))
 	{
 		_line_number++;
@@ -199,13 +199,16 @@ string LINE;
 					this->CheckForDirective(LINE, pPC);
 					break;
 				default:
+					this->pLog->LogMsg("See if its an instruction");
 					string _line = LINE;
 					std::transform(_line.begin(), _line.end(), _line.begin(), ::toupper);
 					const auto line = pU->ltrim( _line );
 					const auto trimmed = pU->rtrim( line );
 					vector<std::string> words = pU->split(trimmed);
+
 					for(std::vector<Instruction *>::size_type x = 0; x < this->pISet->size() ; x++)
 					{
+						this->pLog->LogMsg("Fetch next Inst in List....");
 						Instruction *pI = this->pISet->at(x);
 						//
 						// give each instruction the chance to parse the line.
@@ -216,8 +219,11 @@ string LINE;
 							pLog->LogMsg("Save new Instruction: "+pInst->getName());
 							IList.push_back( pInst );
 							unsigned int iLength = pInst->getLength();
+							pInst->setPC( pPC->getPC() );
 							pPC->incPC(iLength);
 							pLog->LogMsg(pPC->DisplayAsHex()+" OP: "+pInst->getName()+" "+pInst->toHex());
+							cout<<pPC->DisplayAsHex()<<" "<<pInst->toHex()<<endl;
+							break;
 						}
 					}
 					break;
@@ -232,25 +238,38 @@ string LINE;
 			cout<<IList[x]->getName()<<endl;
 		}
 	}
-
+//--------------------------------------------------
+//
+// Dump Table if instructions to log
+// When read to process to a file we can resolve the labels and their addresses.
+//
+	pLog->LogMsg(" ");
 	pLog->LogMsg("Processed Instructions");
 	for(std::vector<Instruction*>::size_type x = 0; x < IList.size(); x++)
 	{
 		ss.str("");
 		ss.clear();
-		if(IList[x]->hasLabel())
+		if(IList[x]->hasLabel() ==true)
 		{
 			Label *pLabel = IList[x]->getLabel();
-			ss<<IList[x]->getName()<<" - LABEL: "<<pLabel->getName();
+			ss<<"Found -> "<<IList[x]->getName()<<" - LABEL: "<<pLabel->getName();
 		}
 		else
 		{
 			ss<<"Found -> "<<IList[x]->getName();
 		}
-		this->pLog->LogMsg(ss.str());
+		//
+		// Dump all the instruction objects in order.
+		//
+		if(pGP->getDumpFlag()==true)
+		{
+			IList[x]->dump();
+			this->pLog->LogMsg(ss.str());
+		}
 
 	}
 
+	pLog->LogMsg(" ");
 	pLog->LogMsg("Discovered Labels");
 
 	std::vector<Label *>::iterator iter, end;
