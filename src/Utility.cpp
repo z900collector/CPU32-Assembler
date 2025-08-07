@@ -23,6 +23,11 @@
  * Rotate the register index till its in the right place.
  * This type of Utility has Source and Destination Registers
  * encoded in the same instruction at different spots.
+ * For an 8 bit CPU, register would be 2nd byte fetched
+ * T = type
+ * i=instruction
+ * S = Source Register R0-R7
+ * D = Destination Register R0-R7
  *
  * 16 Bit Format
  * TTiiiiii SSSDDD00

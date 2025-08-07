@@ -1,12 +1,12 @@
 /**
- * Created ${DATE}
- * Header for the ${INST} Instruction
+ * Created 2025-08-07
+ * Header for the POP Instruction
  *
  * (C) Sid Young
  * Free for non-commercial use.
  */
-#ifndef ${INST}_${HOUR}_INST_H
-#define ${INST}_${HOUR}_INST_H
+#ifndef POP_12_INST_H
+#define POP_12_INST_H
 
 #include <string>
 #include <vector>
@@ -16,15 +16,14 @@
 #include "Logger.h"
 
 
-class ${INST}Inst : public Instruction
+class POPInst : public Instruction
 {
 protected:
 Logger *pLog;
-Instruction *Process_${INST}_Instruction(std::vector<std::string>);
-Label *pLabel;
+Instruction *Process_POP_Instruction(std::vector<std::string>);
 
 public:
-${INST}Inst();
+POPInst();
 Instruction * parse(std::vector<std::string>);
 };
 #endif

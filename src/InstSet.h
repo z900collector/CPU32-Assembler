@@ -25,6 +25,7 @@ enum InstSet
 	BCLR  = 0x0200,
 	BTST  = 0x0300,
 	PUSH  = 0x0400,
+	POP	= 0x0500,
 	DEC_R = 0x1100,
 	DEC_M = 0x1200,
 	INC_R = 0x2000,

@@ -36,3 +36,27 @@ I have written a BASH shell script (located in the tools folder) to speed up Ins
 ## Debugging
 
 The executable will automatically write a daily log file to /logs. This has proven to be increadibly usefull when developing new Instructions and debugging code in real-time as needed.
+
+# Usage
+
+The basic usage to see if a file will assemble is:
+```
+asm test.asm
+```
+
+Write output of assembly run to a hexadecimal (binary) file:
+
+```
+asm test.asm -o output.hex
+```
+
+Dump source file with line numbers during processing of file
+```
+asm -n test.asm
+```
+
+
+```
+./asm -n -l tests/push.asm -o h.bin
+```
+

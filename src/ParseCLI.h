@@ -13,6 +13,8 @@
 #include <ostream>
 #include <iostream>
 #include "GlobalParameters.h"
+#include "Logger.h"
+
 
 using namespace std;
 
@@ -20,6 +22,7 @@ class ParseCLI
 {
 protected:
 GlobalParameters *pGP;
+Logger *pLog;
 
 public:
 ParseCLI( GlobalParameters * );

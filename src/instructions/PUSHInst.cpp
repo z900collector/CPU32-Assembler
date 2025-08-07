@@ -62,18 +62,26 @@ std::vector<std::string> parts;
 	}
 	Utility *pUtil = new Utility();
 	std::string s_reg = parts[0];
-	cout<<"PUSH ["<<s_reg<<"]"<<endl;
-	this->pLog->LogMsg("Process_PUSH_Instruction()");
+
+	std::stringstream ss;
+	ss<<"PUSH ["<<s_reg<<"]"<<endl;
+	this->pLog->LogMsg(ss.str());
 
 	/* Registers are in the same place in all instructions */
 	reg = pUtil->getRegister(s_reg);
 	unsigned int s_regmask = pUtil->getRegisterMask('S',reg);
 
-	cout<<"IW ["<< std::hex << std::setw(8)<< std::setfill('0') << iw<<"]"<<endl;
-	cout<<"S  ["<< std::hex << std::setw(8)<< std::setfill('0') << s_regmask<<"]"<<endl;
+	ss<<"IW ["<< std::hex << std::setw(8)<< std::setfill('0') << iw<<"]"<<endl;
+	this->pLog->LogMsg( ss.str() );
+
+	ss<<"S  ["<< std::hex << std::setw(8)<< std::setfill('0') << s_regmask<<"]"<<endl;
+	this->pLog->LogMsg( ss.str() );
+
 	PUSHInst *pInst = new PUSHInst();
 	pInst->setWord( iw | s_regmask );
-	cout << "OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->instruction_word << "]" <<endl;
+	ss << "OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->instruction_word << "]" <<endl;
+	this->pLog->LogMsg( ss.str() );
+
 	pInst->setName("PUSH");
 	return pInst;
 }
