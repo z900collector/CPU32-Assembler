@@ -14,26 +14,29 @@
 class Instruction
 {
 protected:
-std::string   instruction_name="";
-unsigned int  instruction_word=0;
-unsigned int  instruction_length=1;
-unsigned int  _mem_loc;
-bool          _mem_loc_flag;
-Label	 *pLabel;
+std::string   _name="";
+unsigned int  _opcode=0;
+unsigned int  _length=1;
+unsigned int  _mem_loc = 0;
+bool          _mem_loc_flag = false;
+Label	 *pLabel = nullptr;
+Logger *pLog = nullptr;
 
 public:
-std::string getName();
 void setName(std::string);
-unsigned int getWord();
 void setWord(unsigned int);
-unsigned int getLength();
 void setLength(unsigned int);
-unsigned int getLocation();
-void setLocation(unsigned int);
+void setPC(unsigned int);
+
+unsigned int getWord();
+unsigned int getLength();
+unsigned int getPC();
+std::string getName();
 std::string toHex();
 
 bool hasLabel();
 Label * getLabel();
+void dump();
 
 virtual Instruction * parse(std::vector<std::string>)=0;
 };
