@@ -21,6 +21,10 @@
 #include "NOPInst.h"
 #include "PUSHInst.h"
 #include "POPInst.h"
+#include "BSETInst.h"
+#include "BCLRInst.h"
+#include "BTSTInst.h"
+#include "CALLInst.h"
 //NEXT_ENTRY
 
 using namespace std;
@@ -50,6 +54,10 @@ vector<Instruction *> * load()
 	this->pISet->push_back(new XORInst);
 	this->pISet->push_back(new PUSHInst);
 	this->pISet->push_back(new POPInst);
+	this->pISet->push_back(new BSETInst);
+	this->pISet->push_back(new BCLRInst);
+	this->pISet->push_back(new BTSTInst);
+	this->pISet->push_back(new CALLInst);
 //NEXT_PUSH_BACK
         return this->pISet;
 }

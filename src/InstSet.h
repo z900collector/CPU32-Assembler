@@ -21,15 +21,15 @@
 enum InstSet
 {
 	NOP   = 0x0000,
-	BSET  = 0x0100,
-	BCLR  = 0x0200,
-	BTST  = 0x0300,
+	BSET	= 0x0100,
 	PUSH  = 0x0400,
 	POP	= 0x0500,
+	DEC   = 0x1000,
 	DEC_R = 0x1100,
 	DEC_M = 0x1200,
-	INC_R = 0x2000,
-	INC_M = 0x2100,
+	INC   = 0x2000,
+	INC_R = 0x2100,
+	INC_M = 0x2200,
 	XOR_R = 0x3000,
 	XOR_RM= 0x3100,
 	XOR_M = 0x3200,
@@ -42,6 +42,9 @@ enum InstSet
 	LD    = 0x7000,
 	LDM   = 0x7100,
 	LDI   = 0x7200,
+	BCLR	= 0x0200,
+	BTST	= 0x0300,
+	CALL	= 0xd000,
 //NEXT_ENTRY
 	HALT  = 0xff00
 };
