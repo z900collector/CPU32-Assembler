@@ -11,6 +11,7 @@
 #define InstLoader_Header
 
 #include <vector>
+#include "Logger.h"
 
 // Our Supported Instructions
 
@@ -33,11 +34,19 @@ using namespace std;
 class InstLoader
 {
 protected:
-        std::vector<Instruction *> *pISet = new std::vector<Instruction *>();           // The list of Instructions we can decode
+//
+//The list of Instructions we can decode
+//
+std::vector<Instruction *> *pISet = new std::vector<Instruction *>();
+Logger *pLog;
 
 
 public:
-InstLoader() {}
+InstLoader()
+{
+	this->pLog = Logger::getInstance();
+	this->pLog->LogMsg("InstLoader() Coonstructor");
+}
 
 /**
  *----------------------------------------
@@ -47,6 +56,8 @@ InstLoader() {}
  */
 vector<Instruction *> * load()
 {
+	this->pLog->LogFunction("InstLoader::load()");
+	this->pISet->push_back(new CALLInst);
 	this->pISet->push_back(new HALTInst);
 	this->pISet->push_back(new LDInst);
 	this->pISet->push_back(new INCDECInst);
@@ -57,9 +68,9 @@ vector<Instruction *> * load()
 	this->pISet->push_back(new BSETInst);
 	this->pISet->push_back(new BCLRInst);
 	this->pISet->push_back(new BTSTInst);
-	this->pISet->push_back(new CALLInst);
 //NEXT_PUSH_BACK
-        return this->pISet;
+	this->pLog->LogFunction("Supported Instructions loaded!");
+	return this->pISet;
 }
 };
 #endif
