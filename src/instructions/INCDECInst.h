@@ -5,6 +5,9 @@
  * Format:
  *  DEC Rd   where "d" is 0-8
  *  DEC (Rd) memory pointed to by Register
+ *
+ * (C) Sid Young 2025
+ * Free for non-commercial use.
  */
 
 #ifndef INC_DEC_INST_Header
@@ -21,10 +24,9 @@
 class INCDECInst : public Instruction
 {
 protected:
-Logger *pLog;
 Instruction * Decrement(std::vector<std::string>);
 Instruction * Increment(std::vector<std::string>);
-
+Logger *pLog;
 
 public:
 INCDECInst();

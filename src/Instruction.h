@@ -32,8 +32,10 @@ unsigned int getLocation();
 void setLocation(unsigned int);
 std::string toHex();
 
+bool hasLabel();
+Label * getLabel();
+
 virtual Instruction * parse(std::vector<std::string>)=0;
-//virtual Instruction * parse(std::vector<std::string>, std::vector<Label *> cLabels, std::vector<Instruction *> MissingLabels);
 };
 
 #endif

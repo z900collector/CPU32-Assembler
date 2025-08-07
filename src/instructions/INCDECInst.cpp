@@ -24,71 +24,78 @@
 
 INCDECInst::INCDECInst()
 {
-        this->pLog = Logger::getInstance();
+	this->pLog = Logger::getInstance();
+	this->pLog->LogMsg("INCDECInst::INCDECInst()");
+	this->pLabel = nullptr;
 }
 
 
 
 Instruction * INCDECInst::parse(std::vector<std::string> words)
 {
-        if(words[0]=="DEC")
-        {
-                return this->Decrement(words);
-        }
-        if(words[0]=="INC")
-        {
-                return this->Increment(words);
-        }
-        return nullptr;
+	this->pLog->LogMsg("parse()");
+	if(words[0]=="DEC")
+	{
+	  return this->Decrement(words);
+	}
+	if(words[0]=="INC")
+	{
+		return this->Increment(words);
+	}
+	return nullptr;
 }
 
 
 
 /**
  * DEC R<n> or DEC (R<n>)
+ * Instruction WOrd is set based on format
+ * See: src/InstSet.h for formats 
  *
  */
 Instruction *INCDECInst::Decrement(std::vector<std::string> words)
 {
 unsigned int reg = 0;
 std::string d_reg = "";
-unsigned int iw=0;
+unsigned int iw=DEC;
 std::stringstream params(words[1]);
 std::vector<std::string> parts;
 char mem_token = words[1].at(0);
 
-        Utility *pUtil = new Utility();
+	this->pLog->LogMsg("Decrement()");
 
-        // DEC (R<n>) - strip (), get register and amend instruction_word (iw)
-        //      cpu should read the address in Rs and fetch the memory value into the ALU
-        // then dec it and store it back to memory
-        if(mem_token == '(')
-        {
-                words[1].pop_back();
-                words[1].erase(0, 1);
-                d_reg = words[1];
-                iw = DEC_M;
-        }
-        else    // Format: DEC R<n>
-        {
-                iw = DEC_R;
-                while(params.good())
-                {
-                        std::string substr;
-                        getline( params, substr, '(' );
-                        parts.push_back( substr );
-                }
-                d_reg = parts[0];
-        }
-        /* Registers are in the same place in all instructions */
-        reg = pUtil->getRegister(d_reg);
-        unsigned int d_regmask = pUtil->getRegisterMask('D',reg);
+	Utility *pUtil = new Utility();
 
-        /* return a new inst of this instruction */
-        Instruction *pInst = new INCDECInst();
-        pInst->setName("DEC");
-        pInst->setWord(iw | d_regmask);
-        return  pInst;
+	// DEC (R<n>) - strip (), get register and amend instruction_word (iw)
+	// cpu should read the address in Rs and fetch the memory value into the ALU
+	// then dec it and store it back to memory
+	if(mem_token == '(')
+	{
+		words[1].pop_back();
+		words[1].erase(0, 1);
+		d_reg = words[1];
+		iw = DEC_M;
+	}
+	else    // Format: DEC R<n>
+	{
+		iw = DEC_R;
+		while(params.good())
+		{
+			std::string substr;
+			getline( params, substr, '(' );
+			parts.push_back( substr );
+		}
+		d_reg = parts[0];
+	}
+	/* Registers are in the same place in all instructions */
+	reg = pUtil->getRegister(d_reg);
+	unsigned int d_regmask = pUtil->getRegisterMask('D',reg);
+
+	/* return a new inst of this instruction */
+	Instruction *pInst = new INCDECInst();
+	pInst->setName("DEC");
+	pInst->setWord(iw | d_regmask);
+	return  pInst;
 }
 
 
@@ -99,45 +106,48 @@ char mem_token = words[1].at(0);
  */
 Instruction * INCDECInst::Increment(std::vector<std::string> words)
 {
-unsigned int iw=0;
+unsigned int iw=INC;
 unsigned int reg = 0;
 std::string d_reg = "";
 
-        std::stringstream params(words[1]);
-        std::vector<std::string> parts;
-        char mem_token = words[1].at(0);
+	this->pLog->LogMsg("Increment()");
 
-        // INC (R<n>) - strip (), get register and amend instruction_word (iw)
-        //      cpu should read the address in Rs and fetch the memory value into the ALU
-        // then dec it and store it back to memory
-        Utility *pUtil = new Utility();
-        if(mem_token == '(')
-        {
-                words[1].pop_back();
-                words[1].erase(0, 1);
-                d_reg = words[1];
-                iw = INC_M;
-        }
-        else    // Format: INC R<n>
-        {
-                iw = INC_R;
-                while(params.good())
-                {
-                        std::string substr;
-                        getline( params, substr, '(' );
-                        parts.push_back( substr );
-                }
-                d_reg = parts[0];
-        }
-        /* Registers are in the same place in all instructions */
-        reg = pUtil->getRegister(d_reg);
-        unsigned int d_regmask = pUtil->getRegisterMask('D',reg);
+	std::stringstream params(words[1]);
+	std::vector<std::string> parts;
+	char mem_token = words[1].at(0);
 
-        /* return a new inst of this instruction */
-        Instruction *pInst = new INCDECInst();
-        pInst->setName("INC");
-        pInst->setWord(iw | d_regmask);
-        return  pInst;
+	// INC (R<n>) - strip (), get register and amend instruction_word (iw)
+	// cpu should read the address in Rs and fetch the memory value into the ALU
+	// then dec it and store it back to memory
+
+	Utility *pUtil = new Utility();
+	if(mem_token == '(')
+	{
+		this->pLog->LogMsg("INC () format found");
+		words[1].pop_back();
+		words[1].erase(0, 1);
+		d_reg = words[1];
+		iw = INC_M;
+	}
+	else    // Format: INC R<n>
+	{
+		this->pLog->LogMsg("INC R<d> format found");
+		iw = INC_R;
+		while(params.good())
+		{
+			std::string substr;
+			getline( params, substr, '(' );
+			parts.push_back( substr );
+		}
+		d_reg = parts[0];
+	}
+	reg = pUtil->getRegister(d_reg);
+	unsigned int d_regmask = pUtil->getRegisterMask('D',reg);
+	/* return a new inst of this instruction */
+	Instruction *pInst = new INCDECInst();
+	pInst->setName("INC");
+	pInst->setWord(iw | d_regmask);
+	return pInst;
 }
 
 /* End of file */

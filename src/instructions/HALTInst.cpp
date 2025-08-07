@@ -23,6 +23,7 @@
 HALTInst::HALTInst()
 {
 	this->pLog = Logger::getInstance();
+	this->pLog->LogMsg("HALTInst::HALTInst()");
 	this->pLabel = nullptr;
 }
 

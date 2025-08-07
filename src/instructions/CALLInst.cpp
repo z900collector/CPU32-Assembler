@@ -68,28 +68,18 @@ std::vector<std::string> parts;
 		getline( params, substr, ',' );
 		parts.push_back( substr );
 	}
-	Utility *pUtil = new Utility();
-	std::string d_reg = parts[0];
-	std::string s_reg = parts[1];
+	std::string s_label = parts[0];
 
-	/* Registers are in the same place in all instructions */
-	reg = pUtil->getRegister(d_reg);
-	unsigned int d_regmask = pUtil->getRegisterMask('D',reg);
-	reg = pUtil->getRegister(s_reg);
-	unsigned int s_regmask = pUtil->getRegisterMask('S',reg);
 
 	std::stringstream ss;
-	ss<<"CALL ["<<s_reg<<"] -> ["<<d_reg<<"]";
-	this->pLog->LogMsg( ss.str() );
-	ss<<"IW ["<< std::hex << std::setw(8)<< std::setfill('0') << iw<<"]"<<endl;
-	this->pLog->LogMsg( ss.str() );
-	ss<<"D  ["<< std::hex << std::setw(8)<< std::setfill('0') << d_regmask<<"]"<<endl;
-	this->pLog->LogMsg( ss.str() );
-	ss<<"S  ["<< std::hex << std::setw(8)<< std::setfill('0') << s_regmask<<"]"<<endl;
+	ss<<"Call this label -> ["<<s_label<<"]";
 	this->pLog->LogMsg( ss.str() );
 
+	// Create new object and a label, we match them up at the end;
+
 	CALLInst *pInst = new CALLInst();
-	pInst->setWord( iw | d_regmask | s_regmask );
+	pInst->setWord( iw );
+	pInst->pLabel = new Label(s_label);
 	ss<<"OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->instruction_word << "]";
 	this->pLog->LogMsg( ss.str() );
 	pInst->setName("CALL");

@@ -17,10 +17,12 @@
 #define	Label_class
 
 #include <string>
+#include "Logger.h"
 
 class Label
 {
 private:
+Logger *pLog;
 unsigned int _label_referenced;
 unsigned int _label_location;
 std::string  _label_name = "";
@@ -28,6 +30,7 @@ bool         _label_valid = false;
 
 public:
 Label();
+Label( std::string n);
 Label( std::string n, unsigned loc);
 
 

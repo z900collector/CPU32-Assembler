@@ -146,12 +146,13 @@ string LINE;
 	int count = this->pISet->size();
 	std::stringstream ss;
 	ss<<count;
-	pLog->LogMsg("Instruction Set Loaded - "+ss.str()+" instruction groups loaded.");
+	this->pLog->LogMsg("Instruction Set Loaded");
+	this->pLog->LogMsg("Loaded [ "+ss.str()+" ]");
 
 	this->pPC = new ProgramCounter();
 	pPC->setPC(0);
 
-	pLog->LogMsg("Read File.");
+	this->pLog->LogMsg("Read File.");
 	while(getline(*pSourceFile, LINE))
 	{
 		_line_number++;
@@ -206,9 +207,13 @@ string LINE;
 					for(std::vector<Instruction *>::size_type x = 0; x < this->pISet->size() ; x++)
 					{
 						Instruction *pI = this->pISet->at(x);
-						auto *pInst = pI->parse( words );		   // give each instruction the chance to parse the line.
+						//
+						// give each instruction the chance to parse the line.
+						//
+						auto *pInst = pI->parse( words );
 						if( pInst != NULL)
 						{
+							pLog->LogMsg("Save new Instruction: "+pInst->getName());
 							IList.push_back( pInst );
 							unsigned int iLength = pInst->getLength();
 							pPC->incPC(iLength);
@@ -228,8 +233,25 @@ string LINE;
 		}
 	}
 
+	pLog->LogMsg("Processed Instructions");
+	for(std::vector<Instruction*>::size_type x = 0; x < IList.size(); x++)
+	{
+		ss.str("");
+		ss.clear();
+		if(IList[x]->hasLabel())
+		{
+			Label *pLabel = IList[x]->getLabel();
+			ss<<IList[x]->getName()<<" - LABEL: "<<pLabel->getName();
+		}
+		else
+		{
+			ss<<"Found -> "<<IList[x]->getName();
+		}
+		this->pLog->LogMsg(ss.str());
+
+	}
+
 	pLog->LogMsg("Discovered Labels");
-	cout<<endl<<"Discovered Labels"<<endl;
 
 	std::vector<Label *>::iterator iter, end;
 	for(iter = Labels.begin(), end=Labels.end(); iter != end; ++iter)

@@ -22,6 +22,15 @@ void Instruction::setLength(unsigned int len) { this->instruction_length=len; }
 unsigned int Instruction::getLocation(){ return this->_mem_loc; }
 void Instruction::setLocation(unsigned int loc) {this->_mem_loc = loc;this->_mem_loc_flag=true; }
 
+bool Instruction::hasLabel()
+{
+	return (this->pLabel != nullptr);
+}
+ 
+Label * Instruction::getLabel()
+{
+	return this->pLabel;
+}
 
 std::string Instruction::toHex()
 {

@@ -18,6 +18,7 @@
  */
 
 #include <string>
+#include <sstream>
 #include <iostream>
 #include "Label.h"
 
@@ -25,17 +26,46 @@ using namespace std;
 
 Label::Label()
 {
-        this->_label_referenced = 1;
-        this->_label_location = 0;
-        this->_label_valid = false;
-        this->_label_name="undefined";
+	this->pLog = Logger::getInstance();
+	this->pLog->LogMsg("Constructor Label()");
+
+	this->_label_referenced = 1;
+	this->_label_location = 0;
+	this->_label_valid = false;
+	this->_label_name="undefined";
 }
 
+
+
+/**
+ * If we hit a label being referenced by
+ * an instruction then we need to create
+ * a label but with no location, this will
+ * get set later. *
+ */
+Label::Label( std::string n)
+{
+	this->pLog = Logger::getInstance();
+	this->pLog->LogMsg("Constructor Label("+n+")");
+
+	this->_label_location = 0;
+	this->_label_valid = false;
+	this->_label_name=n;
+}
+
+/**
+ * This Constructor is usually called when we
+ * encounter a label on its own (at the start of a line)
+ * So we know its PC value.
+ */
 Label::Label( std::string n, unsigned loc)
 {
-        this->_label_location = loc;
-        this->_label_valid = true;
-        this->_label_name=n;
+	this->pLog = Logger::getInstance();
+	this->pLog->LogMsg("Constructor Label("+n+")");
+
+	this->_label_location = loc;
+	this->_label_valid = true;
+	this->_label_name=n;
 }
 
 
@@ -47,7 +77,7 @@ Label::Label( std::string n, unsigned loc)
  */
 bool Label::isDefined()
 {
-        return this->_label_valid;
+	return this->_label_valid;
 }
 
 
@@ -59,12 +89,12 @@ bool Label::isDefined()
  */
 std::string Label::getName()
 {
-        return this->_label_name;
+	return this->_label_name;
 }
 
 void Label::setName(std::string n)
 {
-        this->_label_name=n;
+	this->_label_name=n;
 }
 
 
@@ -80,25 +110,25 @@ void Label::incRefCount()
 
 unsigned Label::getRefCount() const
 {
-		  return this->_label_referenced;
+	return this->_label_referenced;
 }
 
 
 unsigned Label::getLocation() const
 {
-        return this->_label_location;
+	return this->_label_location;
 }
 
 
 void Label::setLocation(unsigned loc)
 {
-        this->_label_location = loc;
-        this->_label_valid = true;
+	this->_label_location = loc;
+	this->_label_valid = true;
 }
 
 
 void Label::dump()
 {
-		  cout<<this->_label_location<<" - "<<this->_label_name<<" - "<<this->_label_valid<<endl;
+	cout<<this->_label_location<<" - "<<this->_label_name<<" - "<<this->_label_valid<<endl;
 }
 /* End of file */
