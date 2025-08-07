@@ -1,0 +1,98 @@
+/**
+ * Process BTST instruction in different formats and if OK
+ * return an object representing this instruction.
+ * Created 2025-08-07 
+
+ * (C) Sid Young 2025
+ * Free for non-commercial use.
+ */
+
+#include <string>
+#include <sstream>
+#include <vector>
+#include <iomanip>
+#include <iostream>
+
+
+#include "BTSTInst.h"
+#include "Instruction.h"
+#include "Utility.h"
+#include "InstSet.h"
+#include "Logger.h"
+
+
+
+using namespace std;
+
+
+BTSTInst::BTSTInst()
+{
+	this->pLog = Logger::getInstance();
+	this->pLog->LogMsg("BTSTInst() Constructor");
+	this->pLabel = nullptr;
+}
+
+
+Instruction * BTSTInst::parse(std::vector<std::string> words)
+{
+	this->pLog->LogFunction("parse()");
+	if(words[0]=="BTST")
+	{
+		return this->Process_BTST_Instruction(words);
+	}
+	return nullptr;
+}
+
+
+
+/**
+ *------------------------------------------------------------
+ *
+ * Parse the line and mask in the additional parameters
+ * If there is source and destination registers then parse those
+ * and biwise OR them into the basic OPCODE.
+ *
+ * Create an BTSTInst object and return it back.
+ */
+Instruction *BTSTInst::Process_BTST_Instruction(std::vector<std::string> words)
+{
+unsigned int iw = BTST;
+unsigned int reg = 0;
+std::stringstream params(words[1]);
+std::vector<std::string> parts;
+
+	this->pLog->LogFunction("Process_BTST_Instruction()");
+	while(params.good())
+	{
+		std::string substr;
+		getline( params, substr, ',' );
+		parts.push_back( substr );
+	}
+	Utility *pUtil = new Utility();
+	std::string d_reg = parts[0];
+	std::string s_reg = parts[1];
+
+	/* Registers are in the same place in all instructions */
+	reg = pUtil->getRegister(d_reg);
+	unsigned int d_regmask = pUtil->getRegisterMask('D',reg);
+	reg = pUtil->getRegister(s_reg);
+	unsigned int s_regmask = pUtil->getRegisterMask('S',reg);
+
+	std::stringstream ss;
+	ss<<"BTST ["<<s_reg<<"] -> ["<<d_reg<<"]";
+	this->pLog->LogMsg( ss.str() );
+	ss<<"IW ["<< std::hex << std::setw(8)<< std::setfill('0') << iw<<"]"<<endl;
+	this->pLog->LogMsg( ss.str() );
+	ss<<"D  ["<< std::hex << std::setw(8)<< std::setfill('0') << d_regmask<<"]"<<endl;
+	this->pLog->LogMsg( ss.str() );
+	ss<<"S  ["<< std::hex << std::setw(8)<< std::setfill('0') << s_regmask<<"]"<<endl;
+	this->pLog->LogMsg( ss.str() );
+
+	BTSTInst *pInst = new BTSTInst();
+	pInst->setWord( iw | d_regmask | s_regmask );
+	ss<<"OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->instruction_word << "]";
+	this->pLog->LogMsg( ss.str() );
+	pInst->setName("BTST");
+	return pInst;
+}
+/* End of file */
