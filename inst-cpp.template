@@ -28,12 +28,14 @@ using namespace std;
 ${INST}Inst::${INST}Inst()
 {
 	this->pLog = Logger::getInstance();
+	this->pLog->LogMsg("${INST}Inst() Constructor");
+	this->pLabel = nullptr;
 }
 
 
 Instruction * ${INST}Inst::parse(std::vector<std::string> words)
 {
-	// LD Rd,Rs
+	this->pLog->LogFunction("parse()");
 	if(words[0]=="${INST}")
 	{
 		return this->Process_${INST}_Instruction(words);
@@ -45,16 +47,21 @@ Instruction * ${INST}Inst::parse(std::vector<std::string> words)
 
 /**
  *------------------------------------------------------------
- * Then parse and mask in the source and destination register binary value
+ *
+ * Parse the line and mask in the additional parameters
+ * If there is source and destination registers then parse those
+ * and biwise OR them into the basic OPCODE.
+ *
  * Create an ${INST}Inst object and return it back.
  */
 Instruction *${INST}Inst::Process_${INST}_Instruction(std::vector<std::string> words)
 {
-unsigned int iw = LD;
+unsigned int iw = ${INST};
 unsigned int reg = 0;
 std::stringstream params(words[1]);
 std::vector<std::string> parts;
 
+	this->pLog->LogFunction(""Process_${INST}_Instruction()";
 	while(params.good())
 	{
 		std::string substr;
@@ -64,7 +71,6 @@ std::vector<std::string> parts;
 	Utility *pUtil = new Utility();
 	std::string d_reg = parts[0];
 	std::string s_reg = parts[1];
-	cout<<"LD ["<<s_reg<<"] -> ["<<d_reg<<"]"<<endl;
 
 	/* Registers are in the same place in all instructions */
 	reg = pUtil->getRegister(d_reg);
@@ -72,13 +78,21 @@ std::vector<std::string> parts;
 	reg = pUtil->getRegister(s_reg);
 	unsigned int s_regmask = pUtil->getRegisterMask('S',reg);
 
-//	cout<<"IW ["<< std::hex << std::setw(8)<< std::setfill('0') << iw<<"]"<<endl;
-//	cout<<"D  ["<< std::hex << std::setw(8)<< std::setfill('0') << d_regmask<<"]"<<endl;
-//	cout<<"S  ["<< std::hex << std::setw(8)<< std::setfill('0') << s_regmask<<"]"<<endl;
+	std::stringstream ss;
+	ss<<"${INST} ["<<s_reg<<"] -> ["<<d_reg<<"]";
+	this->pLog->LogMsg( ss.str() );
+	ss<<"IW ["<< std::hex << std::setw(8)<< std::setfill('0') << iw<<"]"<<endl;
+	this->pLog->LogMsg( ss.str() );
+	ss<<"D  ["<< std::hex << std::setw(8)<< std::setfill('0') << d_regmask<<"]"<<endl;
+	this->pLog->LogMsg( ss.str() );
+	ss<<"S  ["<< std::hex << std::setw(8)<< std::setfill('0') << s_regmask<<"]"<<endl;
+	this->pLog->LogMsg( ss.str() );
+
 	${INST}Inst *pInst = new ${INST}Inst();
 	pInst->setWord( iw | d_regmask | s_regmask );
-//	cout << "OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->instruction_word << "]" <<endl;
-	pInst->setName("LD");
+	ss<<"OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->instruction_word << "]";
+	this->pLog->LogMsg( ss.str() );
+	pInst->setName("${INST}");
 	return pInst;
 }
 /* End of file */
