@@ -12,7 +12,6 @@
 class XFERInst : public Instruction
 {
 protected:
-Logger *pLog;
 Instruction *XferToRegister(std::vector<std::string>);
 
 public:

@@ -9,9 +9,6 @@
 
 class NOPInst : public Instruction
 {
-protected:
-Logger *pLog;
-
 public:
 NOPInst();
 Instruction * parse(std::vector<std::string>);

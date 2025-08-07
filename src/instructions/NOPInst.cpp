@@ -17,22 +17,25 @@
 
 NOPInst::NOPInst()
 {
-        this->pLog = Logger::getInstance();
+	this->pLog = Logger::getInstance();
+	this->pLog->LogMsg("NOPInst() Constructor");
+	this->pLabel = nullptr;
 }
 
 
 Instruction * NOPInst::parse(std::vector<std::string> words)
 {
-        if(words[0]=="NOP")
-        {
-                Instruction *pInst = new NOPInst();
-                pInst->setName("NOP");
-                pInst->setWord(NOP);
-                pInst->setLength(1);
-                return pInst;
-        }
-        else
-                return nullptr;
+	this->pLog->LogFunction("NOPInst::parse()");
+	if(words[0]=="NOP")
+	{
+		Instruction *pInst = new NOPInst();
+		pInst->setName("NOP");
+		pInst->setWord(NOP);
+		pInst->setLength(1);
+		return pInst;
+	}
+	else
+		return nullptr;
 }
 
 /* End of file */

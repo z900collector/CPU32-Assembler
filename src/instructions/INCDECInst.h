@@ -26,7 +26,6 @@ class INCDECInst : public Instruction
 protected:
 Instruction * Decrement(std::vector<std::string>);
 Instruction * Increment(std::vector<std::string>);
-Logger *pLog;
 
 public:
 INCDECInst();

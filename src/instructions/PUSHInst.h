@@ -22,9 +22,7 @@
 class PUSHInst : public Instruction
 {
 protected:
-Logger *pLog;
 Instruction *Process_PUSH_Instruction(std::vector<std::string>);
-Label *pLabel;
 
 public:
 PUSHInst();

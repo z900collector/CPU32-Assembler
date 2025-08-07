@@ -12,7 +12,6 @@
 class LDInst : public Instruction
 {
 protected:
-Logger *pLog;
 Instruction *LoadRegister(std::vector<std::string>);
 Instruction *LoadImmediate(std::vector<std::string>);
 

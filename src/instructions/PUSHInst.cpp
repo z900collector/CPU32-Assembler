@@ -79,10 +79,11 @@ std::vector<std::string> parts;
 
 	PUSHInst *pInst = new PUSHInst();
 	pInst->setWord( iw | s_regmask );
-	ss << "OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->instruction_word << "]" <<endl;
+	ss << "OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->getWord()<< "]" <<endl;
 	this->pLog->LogMsg( ss.str() );
 
 	pInst->setName("PUSH");
+	pInst->setLength(1);
 	return pInst;
 }
 /* End of file */

@@ -84,6 +84,7 @@ std::vector<std::string> parts;
         pInst->setWord( iw | d_regmask | s_regmask );
 //      cout << "OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->instruction_word << "]" <<endl;
         pInst->setName("LD");
+		  pInst->setLength(1);
         return pInst;
 }
 
@@ -120,8 +121,8 @@ std::vector<std::string> parts;
         pInst->setName("LDI");
         pInst->setLength(1);
 
-        cout<<"D  ["<< std::hex << setw(8)<< std::setfill('0') << d_regmask<<"]"<<endl;
-        cout << "OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->instruction_word << "]" <<endl;
+        cout<<"D  ["<< std::hex << setw(4)<< std::setfill('0')<<d_regmask<<"]"<<endl;
+        cout << "OP [0x"<<std::hex<<setw(4)<< std::setfill('0')<<pInst->getWord()<<"]" <<endl;
         return pInst;
 }
 

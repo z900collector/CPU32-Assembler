@@ -19,9 +19,7 @@
 class BSETInst : public Instruction
 {
 protected:
-Logger *pLog;
 Instruction *Process_BSET_Instruction(std::vector<std::string>);
-Label *pLabel;
 
 public:
 BSETInst();

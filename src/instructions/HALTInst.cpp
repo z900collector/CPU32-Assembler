@@ -29,10 +29,9 @@ HALTInst::HALTInst()
 
 Instruction * HALTInst::parse(std::vector<std::string> words)
 {
-	this->pLog->LogFunction("parse()");
+	this->pLog->LogFunction("HALTInst::parse()");
 	if(words[0]=="HALT")
 	{
-		this->pLog->LogFunction("parse()");
 		Instruction *pInst = new HALTInst();
 		pInst->setWord(HALT);
 		pInst->setName("HALT");

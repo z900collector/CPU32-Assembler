@@ -110,6 +110,7 @@ unsigned int s_regmask=0;
                 Instruction *pInst = new XORInst();
                 pInst->setWord( iw );
                 pInst->setName("XOR");
+                pInst->setLength(1);
                 return pInst;
         }
         return nullptr;

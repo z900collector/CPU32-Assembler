@@ -11,10 +11,6 @@
 
 class HALTInst : public Instruction
 {
-protected:
-Logger *pLog;
-
-
 public:
 HALTInst();
 Instruction * parse(std::vector<std::string>);

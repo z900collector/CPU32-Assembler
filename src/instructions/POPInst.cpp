@@ -72,12 +72,13 @@ std::vector<std::string> parts;
 	reg = pUtil->getRegister(s_reg);
 	unsigned int s_regmask = pUtil->getRegisterMask('S',reg);
 
-	ss<<"IW ["<< std::hex << std::setw(8)<< std::setfill('0') << iw<<"]";
-	ss<<"S  ["<< std::hex << std::setw(8)<< std::setfill('0') << s_regmask<<"]";
+	ss<<"IW ["<< std::hex << std::setw(4)<< std::setfill('0') << iw<<"]";
+	ss<<"S  ["<< std::hex << std::setw(4)<< std::setfill('0') << s_regmask<<"]";
 	POPInst *pInst = new POPInst();
 	pInst->setWord( iw | s_regmask );
-	ss<< "OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->instruction_word << "]";
+	ss<< "OP [0x"<<std::hex << setw(4)<< std::setfill('0') << pInst->getWord() << "]";
 	pInst->setName("POP");
+	pInst->setLength(1);
 	return pInst;
 }
 /* End of file */

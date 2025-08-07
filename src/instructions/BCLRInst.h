@@ -19,9 +19,7 @@
 class BCLRInst : public Instruction
 {
 protected:
-Logger *pLog;
 Instruction *Process_BCLR_Instruction(std::vector<std::string>);
-Label *pLabel;
 
 public:
 BCLRInst();

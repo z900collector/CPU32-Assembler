@@ -19,9 +19,7 @@
 class BTSTInst : public Instruction
 {
 protected:
-Logger *pLog;
 Instruction *Process_BTST_Instruction(std::vector<std::string>);
-Label *pLabel;
 
 public:
 BTSTInst();

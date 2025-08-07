@@ -81,18 +81,19 @@ std::vector<std::string> parts;
 	std::stringstream ss;
 	ss<<"BSET ["<<s_reg<<"] -> ["<<d_reg<<"]";
 	this->pLog->LogMsg( ss.str() );
-	ss<<"IW ["<< std::hex << std::setw(8)<< std::setfill('0') << iw<<"]"<<endl;
+	ss<<"IW ["<< std::hex << std::setw(4)<< std::setfill('0') << iw<<"]"<<endl;
 	this->pLog->LogMsg( ss.str() );
-	ss<<"D  ["<< std::hex << std::setw(8)<< std::setfill('0') << d_regmask<<"]"<<endl;
+	ss<<"D  ["<< std::hex << std::setw(4)<< std::setfill('0') << d_regmask<<"]"<<endl;
 	this->pLog->LogMsg( ss.str() );
-	ss<<"S  ["<< std::hex << std::setw(8)<< std::setfill('0') << s_regmask<<"]"<<endl;
+	ss<<"S  ["<< std::hex << std::setw(4)<< std::setfill('0') << s_regmask<<"]"<<endl;
 	this->pLog->LogMsg( ss.str() );
 
 	BSETInst *pInst = new BSETInst();
 	pInst->setWord( iw | d_regmask | s_regmask );
-	ss<<"OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->instruction_word << "]";
+	ss<<"OP [0x"<< std::hex << setw(4)<<std::setfill('0')<<pInst->getWord()<<"]";
 	this->pLog->LogMsg( ss.str() );
 	pInst->setName("BSET");
+	pInst->setLength(1);
 	return pInst;
 }
 /* End of file */

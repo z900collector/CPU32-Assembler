@@ -78,6 +78,7 @@ std::vector<std::string> parts;
         pInst->setWord( iw | d_regmask | s_regmask );
 //      cout << "OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->instruction_word << "]" <<endl;
         pInst->setName("XFER");
+		  pInst->setLength(1);
         return pInst;
 }
 

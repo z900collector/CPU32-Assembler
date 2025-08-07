@@ -35,7 +35,7 @@ CALLInst::CALLInst()
 
 Instruction * CALLInst::parse(std::vector<std::string> words)
 {
-	this->pLog->LogFunction("parse()");
+	this->pLog->LogFunction("CALLInst::parse()");
 	if(words[0]=="CALL")
 	{
 		return this->Process_CALL_Instruction(words);
@@ -72,17 +72,21 @@ std::vector<std::string> parts;
 
 
 	std::stringstream ss;
-	ss<<"Call this label -> ["<<s_label<<"]";
+	ss<<"The call has this label -> ["<<s_label<<"]";
 	this->pLog->LogMsg( ss.str() );
 
 	// Create new object and a label, we match them up at the end;
 
 	CALLInst *pInst = new CALLInst();
 	pInst->setWord( iw );
-	pInst->pLabel = new Label(s_label);
-	ss<<"OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->instruction_word << "]";
-	this->pLog->LogMsg( ss.str() );
 	pInst->setName("CALL");
+	pInst->setLength(2);
+
+	ss<<"OP [ 0x"<< std::hex << setw(4)<< std::setfill('0') << pInst->getWord() << "]";
+	this->pLog->LogMsg( ss.str() );
+	ss<<"Create new label and save in CALL object";
+	pInst->pLabel = new Label(s_label);
+	this->pLog->LogMsg("Return CALL Object (with Label)");
 	return pInst;
 }
 /* End of file */

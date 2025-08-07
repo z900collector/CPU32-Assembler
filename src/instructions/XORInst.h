@@ -12,7 +12,6 @@
 class XORInst : public Instruction
 {
 protected:
-Logger *pLog;
 Instruction *XORRegister(std::vector<std::string>);
 
 public:
