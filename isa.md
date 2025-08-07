@@ -37,17 +37,27 @@ The type 0 instructions have a range of 00-4f
 	BSET  = 0x01 - Register Only at this stage
 	BCLR  = 0x02
 	BTST  = 0x03
+	PUSH  = 0x04
+	POP   = 0x05
+	Free 06-0f
 
 	DEC   = 0x10
 	DEC_R = 0x11 - Register
 	DEC_M = 0x12 - Memory
+	Free 12-1f
+	
 	INC   = 0x20
 	INC_R = 0x20 - Register
 	INC_M = 0x21 - Memory
+	Free 22-2f
+	
 	XOR   = 0x30 
 	XOR_R = 0x31 - Register
 	XOR_RM= 0x32 - R+M
 	XOR_M = 0x33 - Memory
+	Free 34-3f
+
+	Free 40-4f
 ```
 
 ## Type 1 Instructions
@@ -55,9 +65,11 @@ The type 0 instructions have a range of 00-4f
 Type 1 Instruction 50-7f
 
 ```
-	LD    = 0x70
-	LDM   = 0x71 - From memory (16 bits)
-	LDI   = 0x72 - Load Immediate (8 bits)
+	LD    = 0x50
+	LDM   = 0x51 - From memory (16 bits)
+	LDI   = 0x52 - Load Immediate (8 bits) S bits are register to store to.
+	STM   = 0x60 - Store R<s> to Memory
+	MV    = 0x70 - Store R<s> to R<d> (Latch A in R<d>)
 ```
 
 ## Type 2 Instructions
@@ -65,7 +77,7 @@ Type 1 Instruction 50-7f
 Type 2 Instruction - Register operations 80-bf
 
 ```
-	XFER	0x8000 - Reg -> Reg
+	XFER  = 0x80 - Reg -> Reg (Writes to both Latch A and B)
 ```
 
 ## Type 3 Instruction
