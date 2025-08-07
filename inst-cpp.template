@@ -35,7 +35,7 @@ ${INST}Inst::${INST}Inst()
 
 Instruction * ${INST}Inst::parse(std::vector<std::string> words)
 {
-	this->pLog->LogFunction("parse()");
+	this->pLog->LogFunction("${INST}Inst::parse()");
 	if(words[0]=="${INST}")
 	{
 		return this->Process_${INST}_Instruction(words);
