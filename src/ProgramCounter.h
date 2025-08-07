@@ -17,12 +17,15 @@
 #define ProgramCounter_Header
 
 #include <string>
+#include "Logger.h"
 
 
 class ProgramCounter
 {
 private:
 unsigned int pc;
+Logger *pLog;
+
 
 public:
 ProgramCounter();

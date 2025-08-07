@@ -24,29 +24,39 @@ using namespace std;
 
 ProgramCounter::ProgramCounter()
 {
-        this->pc = 0;
+	this->pLog = Logger::getInstance();
+	this->pLog->LogMsg("ProgramCounter::ProgramCounter()");
+	this->pc = 0;
 }
 
 
 void ProgramCounter::incPC(unsigned int v)
 {
-        this->pc=this->pc+v;
+	this->pLog->LogFunction("incPC()");
+	this->pc=this->pc+v;
+	std::stringstream ss;
+	ss<<"PC ["<<this->pc<<"]";
+	this->pLog->LogMsg( ss.str() );
 }
 
 void ProgramCounter::setPC(unsigned int v)
 {
-        this->pc=v;
+	this->pLog->LogFunction("setPC()");
+	this->pc=v;
+	std::stringstream ss;
+	ss<<"PC ["<<this->pc<<"]";
+	this->pLog->LogMsg( ss.str() );
 }
 
 unsigned int ProgramCounter::getPC() const
 {
-        return this->pc;
+	return this->pc;
 }
 
 string ProgramCounter::DisplayAsHex()
 {
-        stringstream ss;
-        ss << std::setw(8) << std::setfill('0') << std::hex << this->pc;
-        return ss.str();
+	stringstream ss;
+	ss << std::setw(4) << std::setfill('0') << std::hex << this->pc;
+	return ss.str();
 }
 /* End of file */
