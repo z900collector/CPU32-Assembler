@@ -27,7 +27,7 @@ using namespace std;
 Label::Label()
 {
 	this->pLog = Logger::getInstance();
-	this->pLog->LogMsg("Constructor Label()");
+	this->pLog->LogMsg("Label() CONSTRUCTOR");
 
 	this->_label_referenced = 1;
 	this->_label_location = 0;
@@ -46,7 +46,7 @@ Label::Label()
 Label::Label( std::string n)
 {
 	this->pLog = Logger::getInstance();
-	this->pLog->LogMsg("Constructor Label("+n+")");
+	this->pLog->LogMsg("Label("+n+") CONSTRUCTOR" );
 
 	this->_label_location = 0;
 	this->_label_valid = false;
@@ -61,7 +61,7 @@ Label::Label( std::string n)
 Label::Label( std::string n, unsigned loc)
 {
 	this->pLog = Logger::getInstance();
-	this->pLog->LogMsg("Constructor Label("+n+")");
+	this->pLog->LogMsg("Label("+n+", LOCATION) CONSTRUCTOR");
 
 	this->_label_location = loc;
 	this->_label_valid = true;
