@@ -21,6 +21,7 @@ class POPInst : public Instruction
 protected:
 Logger *pLog;
 Instruction *Process_POP_Instruction(std::vector<std::string>);
+Label *pLabel;
 
 public:
 POPInst();

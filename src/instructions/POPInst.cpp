@@ -28,12 +28,13 @@ using namespace std;
 POPInst::POPInst()
 {
 	this->pLog = Logger::getInstance();
+	this->pLabel = nullptr;
 }
 
 
 Instruction * POPInst::parse(std::vector<std::string> words)
 {
-	// LD Rd,Rs
+	// POP Rs
 	if(words[0]=="POP")
 	{
 		return this->Process_POP_Instruction(words);
@@ -50,11 +51,12 @@ Instruction * POPInst::parse(std::vector<std::string> words)
  */
 Instruction *POPInst::Process_POP_Instruction(std::vector<std::string> words)
 {
-unsigned int iw = LD;
+unsigned int iw = POP;
 unsigned int reg = 0;
 std::stringstream params(words[1]);
 std::vector<std::string> parts;
 
+	this->pLog->LogFunction("Process_POP_Instruction()");
 	while(params.good())
 	{
 		std::string substr;
@@ -62,23 +64,20 @@ std::vector<std::string> parts;
 		parts.push_back( substr );
 	}
 	Utility *pUtil = new Utility();
-	std::string d_reg = parts[0];
-	std::string s_reg = parts[1];
-	cout<<"LD ["<<s_reg<<"] -> ["<<d_reg<<"]"<<endl;
+	std::string s_reg = parts[0];
 
-	/* Registers are in the same place in all instructions */
-	reg = pUtil->getRegister(d_reg);
-	unsigned int d_regmask = pUtil->getRegisterMask('D',reg);
+	std::stringstream ss;
+	ss<<"POP ["<<s_reg;
+
 	reg = pUtil->getRegister(s_reg);
 	unsigned int s_regmask = pUtil->getRegisterMask('S',reg);
 
-//	cout<<"IW ["<< std::hex << std::setw(8)<< std::setfill('0') << iw<<"]"<<endl;
-//	cout<<"D  ["<< std::hex << std::setw(8)<< std::setfill('0') << d_regmask<<"]"<<endl;
-//	cout<<"S  ["<< std::hex << std::setw(8)<< std::setfill('0') << s_regmask<<"]"<<endl;
+	ss<<"IW ["<< std::hex << std::setw(8)<< std::setfill('0') << iw<<"]";
+	ss<<"S  ["<< std::hex << std::setw(8)<< std::setfill('0') << s_regmask<<"]";
 	POPInst *pInst = new POPInst();
-	pInst->setWord( iw | d_regmask | s_regmask );
-//	cout << "OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->instruction_word << "]" <<endl;
-	pInst->setName("LD");
+	pInst->setWord( iw | s_regmask );
+	ss<< "OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->instruction_word << "]";
+	pInst->setName("POP");
 	return pInst;
 }
 /* End of file */
