@@ -88,8 +88,12 @@ fstream _srcFile;
 	}
 	pLog->LogMsg( "Source file ["+pGP->getInputFile()+"]" );
 	pLog->LogMsg( "  Output to ["+pGP->getOutputFile()+"]" );
-	pLog->LogMsg( "Dump Labels ["+pGP->getDumpFlag()+"]" );
-	pLog->LogMsg( "Line Numbers["+pGP->getLineNumberFlag()+"]" );
+	std::stringstream ss;
+	ss<<"Dump Labels ["<<pGP->getDumpFlag()<<"]";
+	pLog->LogMsg( ss.str() );
+	ss.str("");
+	ss<<"Display Line Numbers["<<pGP->getLineNumberFlag()<<"]";
+	pLog->LogMsg( ss.str() );
 
 	_srcFile.open(pGP->getInputFile(), ios::in);
 	if(_srcFile.is_open())

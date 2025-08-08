@@ -1,7 +1,8 @@
 /**
- * Parses the source file into object code
+ * Source code parser header file.
  *
- * (C) Sid Young
+ *
+ * (C) Sid Young 2025
  * Free for non-commercial use.
  */
 
@@ -37,7 +38,7 @@ ProgramCounter *pPC;
 GlobalParameters *pGP;
 
 vector<Label *> Labels;                                         // Labels encoutered (with PC value)
-vector<Instruction *> MissingLabels;    // Labels referenced which have not yet been discovered
+//vector<Instruction *> MissingLabels;    // Labels referenced which have not yet been discovered
 vector<Instruction *> IList;            // list of decoded instructions in order
 vector<Instruction *> *pISet;           // The list of Instructions we can decode
 
@@ -49,5 +50,8 @@ std::string toHex( unsigned int );
 std::vector<Instruction *> parse( fstream *, GlobalParameters *);
 void CheckForDirective(std::string, ProgramCounter *);
 unsigned int CheckForLabel(std::string, std::vector<Label*> *, ProgramCounter *);
+
+bool AssociateLabels( std::vector<Instruction*> *, std::vector<Label*> *);
+
 };
 #endif

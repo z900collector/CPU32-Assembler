@@ -25,7 +25,7 @@ using namespace std;
 ParseCLI::ParseCLI( GlobalParameters *p )
 {
 	this->pLog = Logger::getInstance();
-	this->pLog->LogMsg("ParseCLI() Object Constructed");
+	this->pLog->LogMsg("ParseCLI::ParseCLI()");
 	this->pGP = p;
 }
 
@@ -33,7 +33,7 @@ ParseCLI::ParseCLI( GlobalParameters *p )
 
 void ParseCLI::parse(int argc, char* argv[])
 {
-	this->pLog->LogFunction("parse()");
+	this->pLog->LogFunction("ParseCLI::parse()");
 
 	bool _output_file_flag = false;
 	if(argc > 64)
@@ -43,10 +43,18 @@ void ParseCLI::parse(int argc, char* argv[])
 
 	std::vector<string> args(argv + 1, argv + argc);
 
-
+	//
+	// Format is:
+	// $ asm24 [options] <input_file> [-o <output_file>]
+	// $ asm24 <input_file> 
+	// $ asm24 <input_file> -o <output_file>
+	// $ asm24 -d -n <input_file> -o <output_file>
+	//
 	for(const auto& arg : args)
 	{
-
+		//
+		// These options come before the input filename.
+		//
 		if(this->pGP->getInputFile().empty())
 		{
 			if(arg == "-n")
@@ -60,12 +68,12 @@ void ParseCLI::parse(int argc, char* argv[])
 			}
 			if(arg == "-d" || arg == "--dump")
 			{
-					  if(this->pGP->getDumpFlag() == true)
-					  {
-								 throw std::runtime_error(" cannot use -d/--dump parameter twice!");
-					  }
-					  this->pGP->setDumpFlag(true);
-					  continue;
+				if(this->pGP->getDumpFlag() == true)
+				{
+					throw std::runtime_error(" cannot use -d/--dump parameter twice!");
+				}
+				this->pGP->setDumpFlag(true);
+				continue;
 			}
 		}
 		else

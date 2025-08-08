@@ -6,7 +6,7 @@
  * object to process that line, if successfull, the object will produce binary code.
  *
  *
- * (C) Sid Young
+ * (C) Sid Young 2025
  * Free for non-commercial use.
  */
 
@@ -39,7 +39,9 @@ using namespace std;
 Parser::Parser()
 {
 	this->pLog = Logger::getInstance();
+	this->pLog->LogMsg("Parser::Parser()");
 }
+
 
 /**
  *----------------------------------------
@@ -127,6 +129,22 @@ unsigned int Parser::CheckForLabel(std::string _line, std::vector<Label*> *lTabl
 /**
  *----------------------------------------
  *
+ * Given the list of instructions found, check
+ * if they encoutered a label, then scan the list
+ * of labels for the associated PC.
+ *
+ * ERROR if not found (return false - no error).
+ */
+bool Parser::AssociateLabels( std::vector<Instruction*> *IList, std::vector<Label*> *LList)
+{
+		  return false;
+}
+
+
+
+/**
+ *----------------------------------------
+ *
  *
  * "Labels" holds known labels as encountered
  * "MissingLabels" holds Instructions that need a Label but it has not yet been passed.
@@ -169,73 +187,85 @@ string LINE;
 		char _cLetter = line.at(0);
 		if(isalpha(LINE[0]))
 		{
-				this->CheckForLabel(LINE, &Labels, pPC);
-				pLog->LogMsg("Found possible LABEL ["+LINE+"]");
-				vector<std::string> components = pU->split(LINE);
-				unsigned int count = components.size();
-				pLog->LogMsg("Component Count: ["+std::to_string(count)+"]");
-				if(count == 1)
+				if(this->CheckForLabel(LINE, &Labels, pPC)!=1)
 				{
-					continue;
-				}
-				unsigned int i = 1;
-				pLog->LogMsg("Rebuild LINE");
-				LINE="";
-				do
-				{
-					LINE += components[i++]+'\t';   // skip the label
-					pLog->LogMsg("LINE: ["+LINE+"]");
-					--count;
-				} while (count>0);
-
-		}
-//		  else
-//		  {
-			switch(_cLetter)
-			{
-				case ';':
-					continue;
-				case '.':
-					this->CheckForDirective(LINE, pPC);
-					break;
-				default:
-					this->pLog->LogMsg("See if its an instruction");
-					string _line = LINE;
-					std::transform(_line.begin(), _line.end(), _line.begin(), ::toupper);
-					const auto line = pU->ltrim( _line );
-					const auto trimmed = pU->rtrim( line );
-					vector<std::string> words = pU->split(trimmed);
-
-					for(std::vector<Instruction *>::size_type x = 0; x < this->pISet->size() ; x++)
+					pLog->LogMsg("Found possible LABEL ["+LINE+"]");
+					vector<std::string> components = pU->split(LINE);
+					unsigned int count = components.size();
+					pLog->LogMsg("Component Count: ["+std::to_string(count)+"]");
+					if(count == 1)
 					{
-						this->pLog->LogMsg("Fetch next Inst in List....");
-						Instruction *pI = this->pISet->at(x);
-						//
-						// give each instruction the chance to parse the line.
-						//
-						auto *pInst = pI->parse( words );
-						if( pInst != NULL)
-						{
-							pLog->LogMsg("Save new Instruction: "+pInst->getName());
-							IList.push_back( pInst );
-							unsigned int iLength = pInst->getLength();
-							pInst->setPC( pPC->getPC() );
-							pPC->incPC(iLength);
-							pLog->LogMsg(pPC->DisplayAsHex()+" OP: "+pInst->getName()+" "+pInst->toHex());
-							cout<<pPC->DisplayAsHex()<<" "<<pInst->toHex()<<endl;
-							break;
-						}
+						continue;
 					}
-					break;
-			}
-//		  }
+					//
+					// If label has code after it...
+					//
+					unsigned int i = 1;
+					pLog->LogMsg("Rebuild LINE");
+					LINE="";
+					do
+					{
+						LINE += components[i++]+'\t';   // skip the label
+						pLog->LogMsg("LINE: ["+LINE+"]");
+						--count;
+					} while (count>0);
+				}
+				else
+				{
+						  pLog->LogMsg("ERROR - Duplicate label found!");
+						  cout<<"ERROR - Duplicate Label found!"<<endl;
+						  cout<<"Line: "<<_line_number<<endl<<endl;
+						  exit(1);
+				}
+		}
+		switch(_cLetter)
+		{
+			case ';':
+				continue;
+			case '.':
+				this->CheckForDirective(LINE, pPC);
+				break;
+			default:
+				this->pLog->LogMsg("See if its an instruction");
+				string _line = LINE;
+				std::transform(_line.begin(), _line.end(), _line.begin(), ::toupper);
+				const auto line = pU->ltrim( _line );
+				const auto trimmed = pU->rtrim( line );
+				vector<std::string> words = pU->split(trimmed);
+
+				for(std::vector<Instruction *>::size_type x = 0; x < this->pISet->size() ; x++)
+				{
+					this->pLog->LogMsg("Fetch next Inst in List....");
+					Instruction *pI = this->pISet->at(x);
+					//
+					// give each instruction the chance to parse the line.
+					//
+					auto *pInst = pI->parse( words );
+					if( pInst != NULL)
+					{
+						pLog->LogMsg("Save new Instruction: "+pInst->getName());
+						IList.push_back( pInst );
+						unsigned int iLength = pInst->getLength();
+						pInst->setPC( pPC->getPC() );
+						pPC->incPC(iLength);
+						pLog->LogMsg(pPC->DisplayAsHex()+" OP: "+pInst->getName()+" "+pInst->toHex());
+
+						//
+						// DEBUG - dump address - opcode to output.
+						//
+						cout<<pPC->DisplayAsHex()<<" "<<pInst->toHex()<<endl;
+						break;
+					}
+				}
+				break;
+		}
 	}
 	if(pGP->getDumpFlag()==true)
 	{
 		cout<< "Instruction list size is "<< IList.size() << endl;
 		for(std::vector<Instruction*>::size_type x = 0; x < IList.size(); x++)
 		{
-			cout<<IList[x]->getName()<<endl;
+			IList[x]->dump();
 		}
 	}
 //--------------------------------------------------
@@ -261,11 +291,7 @@ string LINE;
 		//
 		// Dump all the instruction objects in order.
 		//
-		if(pGP->getDumpFlag()==true)
-		{
-			IList[x]->dump();
-			this->pLog->LogMsg(ss.str());
-		}
+		this->pLog->LogMsg(ss.str());
 
 	}
 
@@ -283,6 +309,9 @@ string LINE;
 		ss << "0x" << std::hex << l << " - "<<n<<" "<<valid;
 		pLog->LogMsg(ss.str());
 	}
+
+	string of = this->pGP->getOutputFile();
+
 	return IList;
 }
 /* end of file */
