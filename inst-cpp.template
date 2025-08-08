@@ -28,18 +28,30 @@ using namespace std;
 ${INST}Inst::${INST}Inst()
 {
 	this->pLog = Logger::getInstance();
-	this->pLog->LogMsg("${INST}Inst() Constructor");
+	this->pLog->LogMsg("${INST}Inst::${INST}Inst()");
 	this->pLabel = nullptr;
 }
 
 
+/**
+ *------------------------------------------------------------
+ *
+ * Determine if this object can handle in instruction
+ * If it does, return a newly created "Instruction" derived object
+ * else return a nullptr.
+ */
 Instruction * ${INST}Inst::parse(std::vector<std::string> words)
 {
 	this->pLog->LogFunction("${INST}Inst::parse()");
+	
 	if(words[0]=="${INST}")
 	{
 		return this->Process_${INST}_Instruction(words);
 	}
+	//
+	// Put any versions of the OPCODE here 
+	// i.e. LD, LDI, LDM, LDR - then call something to process them.
+	//
 	return nullptr;
 }
 
@@ -62,22 +74,35 @@ std::stringstream params(words[1]);
 std::vector<std::string> parts;
 
 	this->pLog->LogFunction("Process_${INST}_Instruction()");
+
+	//
+	// Tokeninze the remainder of the line into "parts"
+	//
 	while(params.good())
 	{
 		std::string substr;
 		getline( params, substr, ',' );
 		parts.push_back( substr );
 	}
-	Utility *pUtil = new Utility();
+
+	//
+	// Template code for Rs, Rd - if you have no registers to process then delete 
+	//
 	std::string d_reg = parts[0];
 	std::string s_reg = parts[1];
 
-	/* Registers are in the same place in all instructions */
+	//
+	// Registers are in the same place in all (trhidyrt) instructions
+	//
+	Utility *pUtil = new Utility();
 	reg = pUtil->getRegister(d_reg);
 	unsigned int d_regmask = pUtil->getRegisterMask('D',reg);
 	reg = pUtil->getRegister(s_reg);
 	unsigned int s_regmask = pUtil->getRegisterMask('S',reg);
 
+	//
+	// Log some debugging messages
+	//
 	std::stringstream ss;
 	ss<<"${INST} ["<<s_reg<<"] -> ["<<d_reg<<"]";
 	this->pLog->LogMsg( ss.str() );
