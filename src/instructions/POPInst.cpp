@@ -28,6 +28,7 @@ using namespace std;
 POPInst::POPInst()
 {
 	this->pLog = Logger::getInstance();
+	this->pLog->LogMsg("POPInst::POPInst()");
 	this->pLabel = nullptr;
 }
 
@@ -35,6 +36,8 @@ POPInst::POPInst()
 Instruction * POPInst::parse(std::vector<std::string> words)
 {
 	// POP Rs
+	this->pLog->LogFunction("POPInst::parse()");
+
 	if(words[0]=="POP")
 	{
 		return this->Process_POP_Instruction(words);
@@ -57,6 +60,7 @@ std::stringstream params(words[1]);
 std::vector<std::string> parts;
 
 	this->pLog->LogFunction("Process_POP_Instruction()");
+	
 	while(params.good())
 	{
 		std::string substr;
@@ -76,7 +80,7 @@ std::vector<std::string> parts;
 	ss<<"S  ["<< std::hex << std::setw(4)<< std::setfill('0') << s_regmask<<"]";
 	POPInst *pInst = new POPInst();
 	pInst->setWord( iw | s_regmask );
-	ss<< "OP [0x"<<std::hex << setw(4)<< std::setfill('0') << pInst->getWord() << "]";
+	ss<< "OP [0x"<<std::hex << setw(4)<<std::setfill('0')<<pInst->getWord()<<"]";
 	pInst->setName("POP");
 	pInst->setLength(1);
 	return pInst;
