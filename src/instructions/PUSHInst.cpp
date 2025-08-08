@@ -23,12 +23,14 @@ using namespace std;
 PUSHInst::PUSHInst()
 {
 	this->pLog = Logger::getInstance();
+	this->pLog->LogMsg("PUSHInst::PUSHInst()");
 	this->pLabel=nullptr;
 }
 
 
 Instruction * PUSHInst::parse(std::vector<std::string> words)
 {
+	this->pLog->LogMsg("PUSHInst::parse()");
 	if(words[0]=="PUSH")
 	{
 		return this->Process_PUSH_Instruction(words);
@@ -64,22 +66,22 @@ std::vector<std::string> parts;
 	std::string s_reg = parts[0];
 
 	std::stringstream ss;
-	ss<<"PUSH ["<<s_reg<<"]"<<endl;
+	ss<<"PUSH ["<<s_reg<<"]";
 	this->pLog->LogMsg(ss.str());
 
 	/* Registers are in the same place in all instructions */
 	reg = pUtil->getRegister(s_reg);
 	unsigned int s_regmask = pUtil->getRegisterMask('S',reg);
 
-	ss<<"IW ["<< std::hex << std::setw(8)<< std::setfill('0') << iw<<"]"<<endl;
+	ss<<"IW ["<< std::hex << std::setw(8)<< std::setfill('0') << iw<<"]";
 	this->pLog->LogMsg( ss.str() );
 
-	ss<<"S  ["<< std::hex << std::setw(8)<< std::setfill('0') << s_regmask<<"]"<<endl;
+	ss<<"S  ["<< std::hex << std::setw(8)<< std::setfill('0') << s_regmask<<"]";
 	this->pLog->LogMsg( ss.str() );
 
 	PUSHInst *pInst = new PUSHInst();
 	pInst->setWord( iw | s_regmask );
-	ss << "OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->getWord()<< "]" <<endl;
+	ss << "OP [" << std::hex << setw(8)<< std::setfill('0') << pInst->getWord()<< "]";
 	this->pLog->LogMsg( ss.str() );
 
 	pInst->setName("PUSH");
