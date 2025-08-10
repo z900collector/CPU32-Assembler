@@ -45,18 +45,36 @@ asm test.asm
 ```
 
 Write output of assembly run to a hexadecimal (binary) file:
+NOTE: This functionality is not yet completed.
 
 ```
 asm test.asm -o output.hex
 ```
 
-Dump source file with line numbers during processing of file
+Dump source file with line numbers during processing of file:
 ```
 asm -n test.asm
 ```
 
+Dump object data to stdout and log file.
+```
+./asm -d tests/push.asm -o h.bin
+```
 
-```
-./asm -n -l tests/push.asm -o h.bin
-```
+# TODO
+
+This is an active project as of 2025-08-01.
+
+The following is a partial TODO list of additional functionality that is not yet completed.
+
+* Complete binary file output code.
+* Add option for object debug dump.
+* Add option to dump pretty ASCII listing of code to stdout and file.
+* Add remaining instructions for CPU24 / CPU32 Home brew project.
+
+
+
+## Future Wishliat
+
+* Support multiple CPU's such as z80, 6502 etc.
 

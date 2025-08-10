@@ -137,7 +137,16 @@ unsigned int Parser::CheckForLabel(std::string _line, std::vector<Label*> *lTabl
  */
 bool Parser::AssociateLabels( std::vector<Instruction*> *IList, std::vector<Label*> *LList)
 {
-		  return false;
+
+// file IO code - next block to write
+	std::ofstream outFile("example.bin", std::ios::binary);
+	int data = 42;
+	outFile.write(reinterpret_cast<char*>(&data), sizeof(data));
+	outFile.close();
+
+
+
+	return false;
 }
 
 
@@ -309,6 +318,10 @@ string LINE;
 		ss << "0x" << std::hex << l << " - "<<n<<" "<<valid;
 		pLog->LogMsg(ss.str());
 	}
+
+	this->AssociateLabels( &IList, &Labels);
+
+
 
 	string of = this->pGP->getOutputFile();
 
