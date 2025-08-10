@@ -1,26 +1,28 @@
-**Packages Required**
+#Packages Required
 
 Built with gcc 11 on RHEL 8 - any gcc compiler above 8.4 should work.
 
 Requries 'make' and it's associated dependencies.
 
 
-**Building**
+#Building
 
-In the base directory, simple run "make", all files will compile and built in the "build" directory. Object files will be created in ./build/src and ./build/src/instructions
-
+In the base directory, simply run "make", all files will compile and built in the "build" directory. Object files will be created in ./build/src and ./build/src/instructions
+```
     $ make
-
+```
 An "asm" symlink will be created linked to ./build/asm
 
-**Clean Up**
+##Clean Up
 
 Run:
-
+```
     $ make clean
+```
 
+##Usage
 
-Running the assembler. You need to specify an ASM file to assemble, failure to do so will yield an error message.
+To assemble a suitably crafted assmebler language source file into binary code, specify the the source file as an argument to the assemble. If you do not specify an ASM file, the assmebler will return an error message.
 ```
 $ ./asm
 ERROR - file not found - Unable to open file!
@@ -45,7 +47,7 @@ XOR Memory[]
 $
 ```
 
-**Sample Test File**
+##Sample Test File
 
 ```;
 ; Test file
@@ -84,11 +86,11 @@ finish:
         .dw     0x32323232      // 32bit word
 ```
 
-**Log File**
+#Log Files
 The assmbler will create a log file in a directory called /logs/
 It will log the operation of the assembler, very handy as you develop your Instruction Set Architecture (ISA).
 
-***Sample Output***
+##Sample Output
 
 ```cat /logs/assembler-debug-2025-07-04.log
 2025-07-04|11:14:19|S|=============================================
@@ -155,4 +157,5 @@ It will log the operation of the assembler, very handy as you develop your Instr
 2025-07-04|11:14:41|END
 2025-07-04|11:14:41|E|=============================================
 ```
+NOTE: This will be updated as required. Refer to the main README.md file.
 
