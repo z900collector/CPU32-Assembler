@@ -57,8 +57,15 @@ void ParseCLI::parse(int argc, char* argv[])
 		//
 		if(this->pGP->getInputFile().empty())
 		{
+			if(arg == "-oa" || arg == "--output-ascii")
+			{
+				this->pLog->LogMsg("Option: -oa");
+				continue;
+			}
+
 			if(arg == "-n")
 			{
+				this->pLog->LogMsg("Option: -n");
 				if(this->pGP->getLineNumberFlag()==true)
 				{
 					throw std::runtime_error(" cannot use -n parameter twice!");
@@ -68,6 +75,7 @@ void ParseCLI::parse(int argc, char* argv[])
 			}
 			if(arg == "-d" || arg == "--dump")
 			{
+				this->pLog->LogMsg("Option: -d");
 				if(this->pGP->getDumpFlag() == true)
 				{
 					throw std::runtime_error(" cannot use -d/--dump parameter twice!");
@@ -80,13 +88,14 @@ void ParseCLI::parse(int argc, char* argv[])
 		{
 			if(_output_file_flag == true)
 			{
-				 this->pGP->setOutputFile(arg);
-				 continue;
+				this->pLog->LogMsg("Option: <output_file> defined");
+				this->pGP->setOutputFile(arg);
+				continue;
 			}
 			if((arg == "-o") && (_output_file_flag == false))
 			{
-				 _output_file_flag = true;
-				 continue;
+				_output_file_flag = true;
+				continue;
 			}
 		}
 		this->pGP->setInputFile(arg);
