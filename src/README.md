@@ -22,7 +22,7 @@ Run:
 
 # Usage
 
-To assemble a suitably crafted assmebler language source file into binary code, specify the the source file as an argument to the assemble. If you do not specify an ASM file, the assmebler will return an error message.
+To assemble a suitably crafted assmebly language source file into binary code, specify the the source file as an argument to the 'asm' executable. If you do not specify an ASM file, the assmebler will return an error message.
 ```
 $ ./asm
 ERROR - file not found - Unable to open file!
@@ -31,19 +31,18 @@ $
 
 To assemble a suitable assembly file:
 ```
-$ ./asm test.asm
-LDI [0255] -> [R1]
-D  [00010000]
-OP [8c0100ff]
-LDI [0512] -> [R2]
-D  [00020000]
-OP [8c020200]
-LD [R1] -> [R3]
-LDI [0XFF] -> [R5]
-D  [00050000]
-OP [8c0500ff]
-Token Processing: (R1)
-XOR Memory[]
+$ ./asm tests/call-jmp.asm
+Open file [ tests/call-jmp.asm ]
+0002 d000
+0004 d000
+0006 d000
+0007 0000
+0008 d100
+0009 0400
+000a 0520
+000b d100
+000c 0000
+000d ff00
 $
 ```
 
