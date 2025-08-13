@@ -6,7 +6,7 @@ DRAFT - Assembler is in Development.
 
 This assembler is written in basic C++ for a custom HomeBrew CPU design that has evolved from an 8 bit design idea into something much larger. 
 
-It is referred to as ASM24 in much of the code as the target environment is going to be 24bits. Initially the code is working on a 16bit architecture but can easily be changed to any bit size (from 8 bits up).
+It is referred to as ASM24 in much of the code as the target environment is going to be 24-bits before being extended to 32-bits. Initially the code is working on a 16-bit architecture but can easily be changed to any bit size (from 8-bits up).
 
 What makes ASM24 different, is the logic for each instruction is handled by the "Instruction Object" itself. This allows the mnemonics and opcodes to be changed to suit any architecture without needing to have a single complex parser. Where the parsing is common, it's been moved to the base class of the instruction or a Utility class for code re-use.
 
@@ -28,10 +28,10 @@ I have written a BASH shell script (located in the tools folder) to speed up Ins
 ## What is NOT working
 
 * The code does not write the binary data to a file, not a big effort is required but I have focused on parsing more complicate dinstructions first.
-* The label processing is not completed.
-* .DB .DW directives are not yet handled 
-* Only a limited number of instructions have been created so far.
-* A usage guide needs to be produced
+* Some directives like .DB and .DW are not yet handled.
+* Only a limited number of instructions have been created so far - early code needs to be refactored into individual classes.
+* Various CLI options are not yet fully implemented - need to tidy this up.
+* A usage guide needs to be produced.
 
 ## Debugging
 
@@ -45,7 +45,7 @@ asm test.asm
 ```
 
 Write output of assembly run to a hexadecimal (binary) file:
-NOTE: This functionality is not yet completed.
+NOTE: **This functionality is not yet completed.**
 
 ```
 asm test.asm -o output.hex
@@ -63,18 +63,18 @@ Dump object data to stdout and log file.
 
 # TODO
 
-This is an active project as of 2025-08-01.
+**This is an active project as of 2025-08-01.**
 
 The following is a partial TODO list of additional functionality that is not yet completed.
 
 * Complete binary file output code.
 * Add option for object debug dump.
 * Add option to dump pretty ASCII listing of code to stdout and file.
-* Add remaining instructions for CPU24 / CPU32 Home brew project.
+* Add remaining instructions for CPU16/CPU24 & CPU32 Home brew project.
 
 
 
 ## Future Wishliat
 
 * Support multiple CPU's such as z80, 6502 etc.
-
+* Add ability to have **.include** directive.
