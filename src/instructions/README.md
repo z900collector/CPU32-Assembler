@@ -16,7 +16,11 @@ Adding a NEW instruction is as simple as:
 * Add an include of the Instruction's header file in InstLoader.h
 * And add a line in the load() method in "InstLoader.h" to push an instance of the Instruction into the list of available instructions.
 
+To make this task easy, a script in the "tools" directory will read the template for the Instruction and corresponding Header file and generate all the changes needed.
+
+
 ## Debugging New Instructions
+
 When developing new instructions, you can use the built in Logger class to write the internal operations of the new Instruction to the log file.
 By tailing the log file, you can build a test asm file with the instruction in all it's variations and ensure the processing of the instruction is correct.
 
