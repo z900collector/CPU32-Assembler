@@ -6,14 +6,17 @@ The design of the CPU uses the top 2 bits to define the instruction type for the
 
 In a 16 bit design, the bit assignements are currently defined as:
 
+```
 FEDCBA98 76543210
 TTiiiiii SSSDDD--
+```
 
 Where:
-"T" is a Type bit.
-"i" is an Instruction
-"S" is a Source Register
-"D" is a Destination Register.
+
+ "T" is a Type bit.
+ "i" is an Instruction
+ "S" is a Source Register
+ "D" is a Destination Register.
 
 For Instructions that do not use registers, the S & D bits are basically 0.
 
