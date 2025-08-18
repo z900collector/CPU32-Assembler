@@ -137,14 +137,35 @@ unsigned int Parser::CheckForLabel(std::string _line, std::vector<Label*> *lTabl
  */
 bool Parser::AssociateLabels( std::vector<Instruction*> *IList, std::vector<Label*> *LList)
 {
+	std::vector<Instruction *>::iterator pInst, lastInst;
+	std::vector<Label *>::iterator iter, lastLabel;
+	bool rv = false;
 
+	for(pInst= IList->begin(), lastInst=IList->end() ; pInst!=lastInst ; pInst++)
+	{
+		
+		cout<<(*pInst)->getPC()<<" - "<<(*pInst)->getName()<<"\t"<<(*pInst)->getWord()<<"\t"<<(*pInst)->hasLabel();
+		if( (*pInst)->hasLabel() ==true)
+		{
+			for(iter = LList->begin(), lastLabel=LList->end(); iter != lastLabel; ++iter)
+			{
+				cout<<".";
+			}
+		}
+		cout<<endl;
+	}
+
+
+	return false;
+}
+
+bool Parser::WriteBinaryFile( std::vector<Instruction*> *IList )
+{
 // file IO code - next block to write
 	std::ofstream outFile("example.bin", std::ios::binary);
 	int data = 42;
 	outFile.write(reinterpret_cast<char*>(&data), sizeof(data));
 	outFile.close();
-
-
 
 	return false;
 }

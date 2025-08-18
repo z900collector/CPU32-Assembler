@@ -37,10 +37,19 @@ Logger *pLog;
 ProgramCounter *pPC;
 GlobalParameters *pGP;
 
-vector<Label *> Labels;                                         // Labels encoutered (with PC value)
-//vector<Instruction *> MissingLabels;    // Labels referenced which have not yet been discovered
-vector<Instruction *> IList;            // list of decoded instructions in order
-vector<Instruction *> *pISet;           // The list of Instructions we can decode
+//
+// Labels encoutered (with PC value) while parsing the source file.
+//
+vector<Label *> Labels;
+//
+// The list of instruction objects decoded from the source file
+// It is in order and contains the fuly decoded instruction etc
+//
+vector<Instruction *> IList;
+//
+// The actual instruction set we can decode for.
+//
+vector<Instruction *> *pISet;
 
 
 
@@ -52,6 +61,7 @@ void CheckForDirective(std::string, ProgramCounter *);
 unsigned int CheckForLabel(std::string, std::vector<Label*> *, ProgramCounter *);
 
 bool AssociateLabels( std::vector<Instruction*> *, std::vector<Label*> *);
+bool WriteBinaryFile(std::vector<Instruction*> *);
 
 };
 #endif
