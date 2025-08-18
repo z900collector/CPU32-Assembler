@@ -46,6 +46,7 @@ enum InstSet
 	JNZ   = 0xc600,
 	CALL	= 0xd000,
 	RET	= 0xd100,
+	RSP	= 0x4200,
 //NEXT_ENTRY
 	HALT  = 0xff00
 };

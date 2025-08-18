@@ -27,6 +27,7 @@
 #include "BTSTInst.h"
 #include "CALLInst.h"
 #include "RETInst.h"
+#include "RSPInst.h"
 //NEXT_ENTRY
 
 using namespace std;
@@ -58,20 +59,20 @@ InstLoader()
 vector<Instruction *> * load()
 {
 	this->pLog->LogFunction("InstLoader::load()");
-
-//NEXT_PUSH_BACK
-	this->pISet->push_back(new RETInst);
-	this->pISet->push_back(new CALLInst);
-	this->pISet->push_back(new HALTInst);
 	this->pISet->push_back(new NOPInst);
 	this->pISet->push_back(new LDInst);
-	this->pISet->push_back(new INCDECInst);
-	this->pISet->push_back(new XORInst);
+//NEXT_PUSH_BACK
+	this->pISet->push_back(new RSPInst);
 	this->pISet->push_back(new PUSHInst);
 	this->pISet->push_back(new POPInst);
+	this->pISet->push_back(new RETInst);
+	this->pISet->push_back(new CALLInst);
+	this->pISet->push_back(new INCDECInst);
+	this->pISet->push_back(new XORInst);
 	this->pISet->push_back(new BSETInst);
 	this->pISet->push_back(new BCLRInst);
 	this->pISet->push_back(new BTSTInst);
+	this->pISet->push_back(new HALTInst);
 	this->pLog->LogMsg("Load Complete - return ISet object");
 	return this->pISet;
 }
