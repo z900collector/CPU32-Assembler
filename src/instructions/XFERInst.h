@@ -1,5 +1,12 @@
-#ifndef XFER_INST_H
-#define XFER_INST_H
+/**
+ * Created 2025-08-19
+ * Header for the XFER Instruction
+ *
+ * (C) Sid Young
+ * Free for non-commercial use.
+ */
+#ifndef XFER_13_INST_H
+#define XFER_13_INST_H
 
 #include <string>
 #include <vector>
@@ -12,7 +19,9 @@
 class XFERInst : public Instruction
 {
 protected:
-Instruction *XferToRegister(std::vector<std::string>);
+Logger *pLog;
+Instruction *Process_XFER_Instruction(std::vector<std::string>);
+Label *pLabel;
 
 public:
 XFERInst();

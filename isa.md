@@ -8,7 +8,7 @@ In a 16 bit design, the bit assignements are currently defined as:
 
 ```
 FEDCBA98 76543210
-TTiiiiii SSSDDD--
+TTiiiiii -SSS-DDD
 ```
 
 Where:
@@ -17,8 +17,9 @@ Where:
  "i" is an Instruction
  "S" is a Source Register
  "D" is a Destination Register.
+ "-" Not defined (zero)
 
-For Instructions that do not use registers, the S & D bits are basically 0.
+For Instructions that do not use registers, the S & D bits are basically 0 unless they are reused for soething else.
 
 # Instruction Set Architecture (ISA)
 
@@ -29,7 +30,9 @@ The "T" bits are designated as follows:
 10------ Transfer Register and Register specific ALU Operations.
 11------ Jump/Call Instructions + (HALT -> all F's).
 ```
-STATUS: Very Incomplete! As I build each functional unit I am adding and updateing this page.
+STATUS: Very Incomplete! As I build each functional unit I am adding and updating this page.
+
+Refer to InsetSet.h for a full list of instructions.
 
 # Registers
 
@@ -63,12 +66,15 @@ The type 0 instructions have a range of 00-4f
 	BSET  = 0x01 - Register Only at this stage
 	BCLR  = 0x02
 	BTST  = 0x03
+	PUSH  = 0x40 - Push Register <Rs>
+	POP   = 0x41 - Pop into Register <Rd>
+	RSP   = 0x42 - Reset Stack Pointer
 	Free 06-0f
 
 	DEC   = 0x10
 	DEC_R = 0x11 - Register
 	DEC_M = 0x12 - Memory
-	Free 12-1f
+	Free 13-1f
 	
 	INC   = 0x20
 	INC_R = 0x20 - Register
@@ -81,9 +87,6 @@ The type 0 instructions have a range of 00-4f
 	XOR_M = 0x33 - Memory
 	Free 34-3f
 
-	PUSH  = 0x40 - Push Register <Rs>
-	POP   = 0x41 - Pop into Register <Rd>
-	RSP   = 0x42 - Reset Stack Pointer
 	Free 40-4f
 ```
 

@@ -28,6 +28,7 @@
 #include "CALLInst.h"
 #include "RETInst.h"
 #include "RSPInst.h"
+#include "XFERInst.h"
 //NEXT_ENTRY
 
 using namespace std;
@@ -61,6 +62,7 @@ vector<Instruction *> * load()
 	this->pLog->LogFunction("InstLoader::load()");
 	this->pISet->push_back(new NOPInst);
 	this->pISet->push_back(new LDInst);
+	this->pISet->push_back(new XFERInst);
 //NEXT_PUSH_BACK
 	this->pISet->push_back(new RSPInst);
 	this->pISet->push_back(new PUSHInst);
