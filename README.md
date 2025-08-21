@@ -1,6 +1,6 @@
 # CPU32-Assembler
 
-DRAFT - Assembler is in Development.
+DRAFT - Assembler is in Development - but will read ASM files and generate code internally.
 
 [![C++ Build](https://github.com/z900collector/CPU32-Assembler/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/z900collector/CPU32-Assembler/actions/workflows/c-cpp.yml)
 
@@ -47,7 +47,7 @@ asm test.asm
 Write output of assembly run to a hexadecimal (binary) file:
 NOTE: **This functionality is not yet completed.**
 
-```
+```:w
 asm test.asm -o output.hex
 ```
 
@@ -71,6 +71,7 @@ The following is a partial TODO list of additional functionality that is not yet
 * Add option for object debug dump.
 * Add option to dump pretty ASCII listing of code to stdout and file.
 * Add remaining instructions for CPU16/CPU24 & CPU32 Home brew project.
+* Add support for remaining directives.
 
 
 
