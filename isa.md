@@ -68,6 +68,8 @@ The type 0 instructions have a range of 00-4f
 	RSP                ; Reset Stack Pointer
 	SC                 ; Set Carry Bit
 	CC                 ; Clear Carry Bit
+	EI                 ; Enable Interupts - Making Instruction available but no interupts in design yet
+	DI                 ; Disable Interupts
 
 	ADD Rs1,Rs2        ; ADD value in Rs1 and Rs2 and write back to results register with C/Z flags set.
 	SUB Rs1,Rs2        ; Subtract Rs1 from Rs2

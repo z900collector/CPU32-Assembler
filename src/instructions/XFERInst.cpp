@@ -65,6 +65,8 @@ Instruction * XFERInst::parse(std::vector<std::string> words)
  * and biwise OR them into the basic OPCODE.
  *
  * Create an XFERInst object and return it back.
+ *
+ * NOTE: XFER is used to write Rs into Both latches in Rd so bitwise operations can be performed.
  */
 Instruction *XFERInst::Process_XFER_Instruction(std::vector<std::string> words)
 {
